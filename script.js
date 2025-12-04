@@ -18,6 +18,8 @@ const winnerCheck = (choice, computerChoice) =>{
     if (choice === computerChoice) {
       total -= 1;
       moves.innerHTML = `Moves Left: ${total}`;
+       Player.innerHTML = `Tie ${playerScore}`;
+       Com.innerHTML = `Tie ${comScore}`;
     }
     
    if( (choice === "rock" && computerChoice === "scissors") || 
@@ -25,7 +27,7 @@ const winnerCheck = (choice, computerChoice) =>{
      (choice === "paper" && computerChoice === "rock")) {
       playerScore += 1;
       total -= 1;
-     Player.innerHTML = playerScore;
+     Player.innerHTML = `Win ${playerScore}`;
      Com.innerHTML = comScore;
      moves.innerHTML = `Moves Left: ${total}`;
  }
@@ -35,7 +37,7 @@ const winnerCheck = (choice, computerChoice) =>{
     comScore += 1;
     total -= 1;
     Player.innerHTML = playerScore;
-    Com.innerHTML = comScore;
+    Com.innerHTML = `Win ${comScore}`;
     moves.innerHTML = `Moves Left: ${total}`;
   }
  if( total===0 && playerScore>comScore){
@@ -86,4 +88,7 @@ const computerChoicer = () => {
 
   return computerChoice;
 };
+
+
+
 
