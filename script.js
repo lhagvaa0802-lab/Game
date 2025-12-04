@@ -1,103 +1,81 @@
 const rock = document.getElementById("rock");
 const scissors = document.getElementById("scissors");
 const paper = document.getElementById("paper");
-const winner = document.getElementById("winner");
-const container = document.getElementById("container");
-const score
-console.log(container, "container");
-
 let playerScore = 0;
 let comScore = 0;
-let total = 0;
+let total = 5;
 const turn = (choice) => {
   const computerChoice = computerChoicer();
 
   winnerCheck(choice, computerChoice);
 };
-
-const winnerCheck = (choice, computerChoice) => {
-  if (choice === "rock" && computerChoice === "scissors") {
-    const whoWins = (document.getElementById("whoWins").innerHTML =
-      "Player win");
-    playerScore++;
-    const Player = (document.getElementById("Player").innerHTML = playerScore);
+const winnerCheck = (choice, computerChoice) =>{
+   const Player = document.getElementById("Player")
+   const Com = document.getElementById("Com")
+   const moves = document.getElementById("movesleft")
+   const resetButton = document.getElementById("reload");
+   const results = document.getElementById("result")
+    if (choice === computerChoice) {
+      total -= 1;
+      moves.innerHTML = `Moves Left: ${total}`;
+    }
+    
+   if( (choice === "rock" && computerChoice === "scissors") || 
+     (choice === "scissors" && computerChoice === "paper") ||
+     (choice === "paper" && computerChoice === "rock")) {
+      playerScore += 1;
+      total -= 1;
+     Player.innerHTML = playerScore;
+     Com.innerHTML = comScore;
+     moves.innerHTML = `Moves Left: ${total}`;
+ }
+  if ((choice === "rock" && computerChoice === "paper") || 
+  (choice === "scissors" && computerChoice === "rock") || 
+  (choice === "paper" && computerChoice === "scissors"))  {
+    comScore += 1;
+    total -= 1;
+    Player.innerHTML = playerScore;
+    Com.innerHTML = comScore;
+    moves.innerHTML = `Moves Left: ${total}`;
   }
-  if (choice === "rock" && computerChoice === "paper") {
-    const whoWins = (document.getElementById("whoWins").innerHTML = "Com win");
-    comScore++;
-    const Com = (document.getElementById("Com").innerHTML = comScore);
+ if( total===0 && playerScore>comScore){
+    const result = (document.getElementById("result").innerHTML =
+      "Game over! Player is the overall winner!");
+    const resetButton = document.getElementById("reload");
+    resetButton.style.display = "block";
+     rock.disabled = true;
+     paper.disabled = true;
+     scissors.disabled = true;
   }
-
-  if (choice === "rock" && computerChoice === "rock") {
-    const whoWins = (document.getElementById("whoWins").innerHTML =
-      "Nobody win");
+  if( total===0 && comScore>playerScore){
+    results.innerHTML ="Game over! Computer is the overall winner!";
+    resetButton.style.display = "block";
+     rock.disabled = true;
+     paper.disabled = true;
+     scissors.disabled = true;
   }
-  if (choice === "scissors" && computerChoice === "scissors") {
-    const whoWins = (document.getElementById("whoWins").innerHTML =
-      "Nobody win");
-  }
-  if (choice === "scissors" && computerChoice === "rock") {
-    const whoWins = (document.getElementById("whoWins").innerHTML = "Com win");
-    const Com = (document.getElementById("Com").innerHTML = comScore);
-  }
-  if (choice === "scissors" && computerChoice === "paper") {
-    const whoWins = (document.getElementById("whoWins").innerHTML =
-      "Player win");
-    const Player = (document.getElementById("Player").innerHTML = playerScore);
-  }
-  if (choice === "paper" && computerChoice === "scissors") {
-    const whoWins = (document.getElementById("whoWins").innerHTML = "Com win");
-    comScore++;
-    const Com = (document.getElementById("Com").innerHTML = comScore);
-  }
-  if (choice === "paper" && computerChoice === "rock") {
-    const whoWins = (document.getElementById("whoWins").innerHTML =
-      "Player win");
-    playerScore++;
-    const Player = (document.getElementById("Player").innerHTML = playerScore);
-  }
-  if (choice === "paper" && computerChoice === "paper") {
-    const whoWins = (document.getElementById("whoWins").innerHTML =
-      "Nobody win");
-  }
-  total++;
-  console.log(total, "total");
-  if (total === 5 && playerScore === comScore) {
-    winner.innerHTML = "draw";
-    clearDisplay();
-    setInterval(() => {
-      resetGame();
-    }, 1000);
-  }
-  if (total === 5 && playerScore > comScore) {
-    winner.innerHTML = "Winner is Player";
-    clearDisplay();
-    setInterval(() => {
-      resetGame();
-    }, 1000);
-  }
-  if (total === 5 && playerScore < comScore) {
-    clearDisplay();
-    winner.innerHTML = "Winner is Com";
-
-    setInterval(() => {
-      resetGame();
-    }, 1000);
-  }
-};
-
+   if (total === 0 && comScore === playerScore) {
+     results.innerHTML ="Game over! It's a tie!";
+     resetButton.style.display = "block";
+      rock.disabled = true;
+      paper.disabled = true;
+      scissors.disabled = true;
+   }
+}
 const resetGame = () => {
   playerScore = 0;
   comScore = 0;
-  total = 0;
+  total = 5;
+  rock.disabled = false;
+  paper.disabled = false;
+  scissors.disabled = false;
+  const moves = (document.getElementById("movesleft").innerHTML = `Moves Left: ${total}`); 
   const Player = (document.getElementById("Player").innerHTML = playerScore);
   const Com = (document.getElementById("Com").innerHTML = comScore);
-};
-
-const clearDisplay = () => {
-  container.innerHTML = "<p>game over</p>";
-  whoWins.innerHTML = " ";
-  score;
+  const result = (document.getElementById("result").innerHTML =
+    "");
+    const resetButton = document.getElementById("reload");
+    resetButton.style.display = "none";
 };
 const computerChoicer = () => {
   const ramdomChoiceIndex = Math.floor(Math.random() * 3);
@@ -109,8 +87,3 @@ const computerChoicer = () => {
   return computerChoice;
 };
 
-// user oorin songolt oruuldag
-// computer songodog
-// hen ylsan esehiig shalgana
-// user bolon computer onootoi bna /0/
-// onoo nemne
